@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    BackgroundColor="White"
+    x:Class="BudgetApp.Pages.MainPage"
+    x:DataType="viewModels:MainPageModel"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:controls="clr-namespace:BudgetApp.Controls;assembly=BudgetApp"
+    xmlns:dataTemplates="clr-namespace:BudgetApp.DataTemplates;assembly=BudgetApp"
+    xmlns:models="clr-namespace:BudgetApp.Models;assembly=BudgetApp"
+    xmlns:viewModels="clr-namespace:BudgetApp.PageModels;assembly=BudgetApp"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness">
+            <OnPlatform.iOS>0,30,0,0</OnPlatform.iOS>
+        </OnPlatform>
+    </ContentPage.Padding>
+    <Grid
+        HorizontalOptions="FillAndExpand"
+        Padding="20"
+        RowDefinitions="50, *, 150"
+        VerticalOptions="FillAndExpand">
+        <!--  APP BAR  -->
+        <Frame
+            BackgroundColor="{StaticResource MainGreenColor}"
+            BorderColor="{StaticResource MainGreenColor}"
+            CornerRadius="6"
+            Grid.Row="0"
+            HasShadow="False"
+            HorizontalOptions="FillAndExpand"
+            Padding="10,5"
+            VerticalOptions="FillAndExpand">
+            <Grid
+                ColumnDefinitions="*,*"
+                HorizontalOptions="FillAndExpand"
+                Padding="0"
+                RowDefinitions="*, *"
+                RowSpacing="0"
+                VerticalOptions="FillAndExpand">
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    Style="{StaticResource HeaderTextStyle}"
+                    Text="Monthly Income"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Style="{StaticResource SubtitleTextStyle}"
+                    Text="Tap to Adjust"
+                    TextColor="{StaticResource BrightTextColor}"
+                    VerticalOptions="Center" />
+                <controls:BorderlessEntry
+                    CharacterSpacing="1"
+                    FontSize="17"
+                    Grid.Column="1"
+                    Grid.RowSpan="2"
+                    HorizontalOptions="Fill"
+                    HorizontalTextAlignment="End"
+                    Keyboard="Numeric"
+                    Style="{StaticResource HeaderTextStyle}"
+                    Text="{Binding MonthlyIncome, Converter={StaticResource CurrencyConverter}, Mode=TwoWay}"
+                    TextColor="{StaticResource BrightTextColor}"
+                    VerticalOptions="Center"
+                    x:Name="MonthlyIncome" />
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="EditIncomeAmount_Tapped" />
+                </Grid.GestureRecognizers>
+            </Grid>
+        </Frame>
+
+        <!--  Expenses section  -->
+        <Frame
+            BorderColor="{StaticResource LightGrayColor}"
+            CornerRadius="6"
+            Grid.Row="1"
+            HasShadow="False"
+            HorizontalOptions="FillAndExpand"
+            Padding="0"
+            VerticalOptions="FillAndExpand">
+            <Grid
+                ColumnDefinitions="*"
+                Padding="0"
+                RowDefinitions="50, *">
+
+                <!--  Header  -->
+                <Frame
+                    BackgroundColor="{StaticResource LightGrayColor}"
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    HasShadow="False"
+                    HorizontalOptions="FillAndExpand"
+                    Padding="10,5"
+                    VerticalOptions="FillAndExpand">
+                    <Label
+                        Style="{StaticResource DarkHeaderTextStyle}"
+                        Text="Expenses"
+                        VerticalOptions="Center" />
+                </Frame>
+
+                <CollectionView Grid.Row="1" ItemsSource="{Binding Expenses}">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="0" Orientation="Vertical" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Expense">
+                            <dataTemplates:ExpenseTile />
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+        </Frame>
+
+        <!--  SUMMARY SECTION  -->
+        <Frame
+            BorderColor="{StaticResource LightGrayColor}"
+            CornerRadius="6"
+            Grid.Row="2"
+            HasShadow="False"
+            HorizontalOptions="FillAndExpand"
+            Padding="10,5"
+            VerticalOptions="FillAndExpand">
+            <Grid
+                ColumnDefinitions="*, *"
+                Padding="0,0"
+                RowDefinitions="*, *, 2*">
+                <!--  Total spent  -->
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="0"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SummaryTextStyle}"
+                    Text="Total spent:"
+                    TextColor="{StaticResource MainRedColor}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    HorizontalOptions="End"
+                    Style="{StaticResource SummaryAmountTextStyle}"
+                    Text="{Binding TotalSpent, Converter={StaticResource CurrencyConverter}}"
+                    TextColor="{StaticResource MainRedColor}"
+                    VerticalOptions="Center" />
+
+                <!--  Remaining balance  -->
+                <Label
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    HorizontalOptions="Start"
+                    Style="{StaticResource SummaryTextStyle}"
+                    Text="Remaining:"
+                    TextColor="{StaticResource MainGreenColor}"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Column="1"
+                    Grid.Row="1"
+                    HorizontalOptions="End"
+                    Style="{StaticResource SummaryAmountTextStyle}"
+                    Text="{Binding RemainingBalance, Converter={StaticResource CurrencyConverter}}"
+                    TextColor="{StaticResource MainGreenColor}"
+                    VerticalOptions="Center" />
+
+                <!--  Buttons  -->
+                <Button
+                    BackgroundColor="{StaticResource MainRedColor}"
+                    Command="{Binding ClearCommand}"
+                    Grid.Column="0"
+                    Grid.Row="2"
+                    Margin="0,20,0,0"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Text="Clear"
+                    TextColor="{StaticResource BrightTextColor}" />
+                <Button
+                    BackgroundColor="{StaticResource MainGreenColor}"
+                    Command="{Binding CalculateCommand}"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Margin="0,20,0,0"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Text="Calculate"
+                    TextColor="{StaticResource BrightTextColor}" />
+            </Grid>
+        </Frame>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<prism:PrismApplication
+    iOsSpecific:Application.EnableAccessibilityScalingForNamedFontSizes="false"
+    mc:Ignorable="d"
+    x:Class="BudgetApp.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:converters="clr-namespace:BudgetApp.Converters;assembly=BudgetApp"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    <Application.Resources>
+
+        <!--  COLORS  -->
+        <Color x:Key="MainGreenColor">#25E18D</Color>
+        <Color x:Key="MainRedColor">#F77579</Color>
+        <Color x:Key="LightGrayColor">#F1F0F6</Color>
+        <Color x:Key="DarkTextColor">Black</Color>
+        <Color x:Key="BrightTextColor">White</Color>
+
+        <!--  LABELS  -->
+        <Style TargetType="Label" x:Key="HeaderTextStyle">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextColor" Value="{StaticResource BrightTextColor}" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style TargetType="Label" x:Key="SubtitleTextStyle">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="TextColor" Value="{StaticResource BrightTextColor}" />
+            <Setter Property="FontAttributes" Value="None" />
+        </Style>
+        <Style
+            BasedOn="{StaticResource HeaderTextStyle}"
+            TargetType="Label"
+            x:Key="DarkHeaderTextStyle">
+            <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
+        </Style>
+        <Style TargetType="Label" x:Key="ExpenseTextStyle">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextTransform" Value="Uppercase" />
+            <Setter Property="TextColor" Value="{StaticResource DarkHeaderTextStyle}" />
+            <Setter Property="FontAttributes" Value="None" />
+        </Style>
+        <Style TargetType="Label" x:Key="SummaryTextStyle">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextTransform" Value="Uppercase" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style TargetType="Label" x:Key="SummaryAmountTextStyle">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="TextTransform" Value="Uppercase" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+
+        <!--  BUTTONS  -->
+        <Style TargetType="Button" x:Key="PrimaryButtonStyle">
+            <Setter Property="FontSize" Value="17" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextTransform" Value="Uppercase" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="VerticalOptions" Value="FillAndExpand" />
+        </Style>
+
+        <!--  ENTRIES  -->
+        <Style TargetType="Entry" x:Key="ExpenseEntryStyle">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextColor" Value="{StaticResource DarkHeaderTextStyle}" />
+            <Setter Property="FontAttributes" Value="None" />
+        </Style>
+
+        <!--  CONVERTERS  -->
+        <converters:CurrencyConverter x:Key="CurrencyConverter" />
+    </Application.Resources>
+</prism:PrismApplication>
